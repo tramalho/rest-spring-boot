@@ -11,8 +11,15 @@ class MathController {
     fun sum(
         @PathVariable(value = "numOne") numOne: String,
         @PathVariable(value = "numTwo") numTwo: String
-        ): Double {
+    ): Double {
 
-        return Double.MAX_VALUE
+        try {
+            val numberOne = numOne.toDouble()
+            val numberTwo = numTwo.toDouble()
+
+            return numberOne + numberTwo
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }
