@@ -1,5 +1,6 @@
 package com.tramalho.rest.spring.boot.controller
 
+import com.tramalho.rest.spring.boot.exception.UnsupportedMathOperationException
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -18,8 +19,8 @@ class MathController {
             val numberTwo = numTwo.toDouble()
 
             return numberOne + numberTwo
-        } catch (e: Exception) {
-            throw e
+        } catch (e: NumberFormatException) {
+            throw UnsupportedMathOperationException(e.message)
         }
     }
 }
