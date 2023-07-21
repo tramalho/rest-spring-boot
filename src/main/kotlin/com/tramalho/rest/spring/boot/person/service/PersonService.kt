@@ -11,8 +11,19 @@ class PersonService {
     private val logger = Logger.getLogger(PersonController::class.simpleName)
 
     fun findById(id: Long): PersonModel {
-        val personModel = PersonModel(id, "content")
+        val personModel = PersonModel(id, "first", "last", "address", "m")
         logger.info("$personModel")
         return personModel
+    }
+
+    fun findAll(): List<PersonModel> {
+        val results = arrayListOf<PersonModel>()
+
+        for (i in 1..8) {
+            results.add(PersonModel(i.toLong(), "first $i", "last $i", "address $i", if (i % 2 == 0) "m" else "f"))
+        }
+
+        logger.info("$results")
+        return results
     }
 }
