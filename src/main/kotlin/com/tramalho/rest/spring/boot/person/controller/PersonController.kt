@@ -3,6 +3,7 @@ package com.tramalho.rest.spring.boot.person.controller
 import com.tramalho.rest.spring.boot.person.model.PersonModel
 import  com.tramalho.rest.spring.boot.person.service.PersonService
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.logging.Logger
 
@@ -32,8 +33,9 @@ class PersonController(private val personService: PersonService) {
     }
 
     @DeleteMapping("/{$ID}")
-    fun delete(@PathVariable(ID) id: String) {
+    fun delete(@PathVariable(ID) id: String):ResponseEntity<Any> {
         personService.delete(id.toLong())
+        return ResponseEntity.noContent().build()
     }
 
     private companion object {
