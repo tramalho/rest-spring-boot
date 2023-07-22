@@ -11,11 +11,11 @@ import jakarta.persistence.Table
 data class PersonModel(
     @Id
     @GeneratedValue
-    val id: Long,
+    val id: Long? = null,
     @Column(name = "first_name", nullable = false)
-    val firstName: String,
+    var firstName: String = "",
     @Column(name = "last_name")
-    val lastName: String,
-    val address: String,
-    val gender: String
+    var lastName: String = "",
+    var address: String = "",
+    var gender: String = ""
 )

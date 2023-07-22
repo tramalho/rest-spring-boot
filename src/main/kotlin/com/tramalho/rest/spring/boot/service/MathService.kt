@@ -1,6 +1,6 @@
 package com.tramalho.rest.spring.boot.service
 
-import com.tramalho.rest.spring.boot.exception.UnsupportedMathOperationException
+import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
 import com.tramalho.rest.spring.boot.model.Operation
 import org.springframework.stereotype.Component
 import kotlin.math.sqrt
@@ -32,7 +32,7 @@ class MathService {
 
             return operation(numberOne, numberTwo)
         } catch (e: NumberFormatException) {
-            throw UnsupportedMathOperationException(e.message)
+            throw ResourceNotFoundException(e.message)
         }
     }
 }

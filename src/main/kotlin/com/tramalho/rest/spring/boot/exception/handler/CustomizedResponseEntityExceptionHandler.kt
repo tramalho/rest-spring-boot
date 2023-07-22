@@ -1,7 +1,7 @@
 package com.tramalho.rest.spring.boot.exception.handler
 
 import com.tramalho.rest.spring.boot.exception.ExceptionResponse
-import com.tramalho.rest.spring.boot.exception.UnsupportedMathOperationException
+import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
@@ -25,12 +25,12 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
         return configResponse(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException::class)
-    final fun handleBadRequestExceptions(
+    @ExceptionHandler(ResourceNotFoundException::class)
+    final fun handleResourceNotFoundException(
         exception: Exception,
         webRequest: WebRequest
     ): ResponseEntity<ExceptionResponse> {
-        return configResponse(exception, webRequest, HttpStatus.BAD_REQUEST)
+        return configResponse(exception, webRequest, HttpStatus.NOT_FOUND)
     }
 
     private fun configResponse(
