@@ -2,10 +2,8 @@ package com.tramalho.rest.spring.boot.person.controller
 
 import com.tramalho.rest.spring.boot.person.model.PersonModel
 import  com.tramalho.rest.spring.boot.person.service.PersonService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.*
 import java.util.logging.Logger
 
 
@@ -21,6 +19,21 @@ class PersonController(private val personService: PersonService) {
     @GetMapping
     fun findBAll(): List<PersonModel> {
         return personService.findAll()
+    }
+
+    @PostMapping
+    fun create(@RequestBody personModel: PersonModel): PersonModel {
+        return personService.create(personModel)
+    }
+
+    @PutMapping
+    fun update(@RequestBody personModel: PersonModel): PersonModel {
+        return personService.create(personModel)
+    }
+
+    @DeleteMapping("/{$ID}")
+    fun delete(@PathVariable(ID) id: String) {
+        personService.delete(id.toLong())
     }
 
     private companion object {

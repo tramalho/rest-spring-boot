@@ -26,4 +26,17 @@ class PersonService {
         logger.info("$results")
         return results
     }
+
+    fun create(personModel: PersonModel): PersonModel {
+        logger.info("$personModel")
+        return personModel
+    }
+    fun update(personModel: PersonModel): PersonModel {
+        logger.info("$personModel")
+        return personModel
+    }
+
+    fun delete(id: Long) {
+        logger.info("$id")
+    }
 }
