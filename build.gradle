@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -11,7 +14,14 @@ group = 'com.tramalho'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '20'
+	sourceCompatibility = JavaVersion.VERSION_20
+}
+
+kotlin {
+	compilerOptions {
+		jvmTarget.set(JvmTarget.JVM_20)
+		freeCompilerArgs.add("-Xjsr305=strict")
+	}
 }
 
 repositories {
@@ -30,12 +40,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.withType(KotlinCompile).configureEach {
-	kotlinOptions {
-		freeCompilerArgs += '-Xjsr305=strict'
-		jvmTarget = '20'
-	}
-}
+//tasks.named("compileKotlin", KotlinCompilationTask::class.java) {
+//	kotlinOptions { // Kotlin compiler options
+//		freeCompilerArgs = listOf("-Xjsr305=strict") // `-Xjsr305=strict` enables the strict mode for JSR-305 annotations
+//		jvmTarget = "20" // This option specifies the target version of the generated JVM bytecode
+//	}
+//}
 
 tasks.named('test') {
 	useJUnitPlatform()
