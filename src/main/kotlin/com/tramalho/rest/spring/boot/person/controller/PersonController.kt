@@ -1,35 +1,32 @@
 package com.tramalho.rest.spring.boot.person.controller
 
-import com.tramalho.rest.spring.boot.person.model.PersonModel
 import  com.tramalho.rest.spring.boot.person.service.PersonService
-import org.springframework.http.MediaType
+import com.tramalho.rest.spring.boot.person.vo.v1.PersonVO
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.logging.Logger
-
 
 @RestController
 @RequestMapping("/person")
 class PersonController(private val personService: PersonService) {
 
     @GetMapping("/{$ID}")
-    fun findById(@PathVariable(ID) id: String): PersonModel {
+    fun findById(@PathVariable(ID) id: String): PersonVO {
         return personService.findById(id.toLong())
     }
 
     @GetMapping
-    fun findBAll(): List<PersonModel> {
+    fun findBAll(): List<PersonVO> {
         return personService.findAll()
     }
 
     @PostMapping
-    fun create(@RequestBody personModel: PersonModel): PersonModel {
-        return personService.create(personModel)
+    fun create(@RequestBody personVO: PersonVO): PersonVO {
+        return personService.create(personVO)
     }
 
     @PutMapping
-    fun update(@RequestBody personModel: PersonModel): PersonModel {
-        return personService.create(personModel)
+    fun update(@RequestBody personVO: PersonVO): PersonVO {
+        return personService.update(personVO)
     }
 
     @DeleteMapping("/{$ID}")

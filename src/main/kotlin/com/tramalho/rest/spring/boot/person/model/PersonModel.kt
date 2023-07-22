@@ -11,7 +11,7 @@ import jakarta.persistence.Table
 data class PersonModel(
     @Id
     @GeneratedValue
-    val id: Long? = null,
+    var id: Long? = null,
     @Column(name = "first_name", nullable = false)
     var firstName: String = "",
     @Column(name = "last_name")
