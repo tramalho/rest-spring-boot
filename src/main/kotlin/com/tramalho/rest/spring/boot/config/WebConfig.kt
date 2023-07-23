@@ -12,9 +12,9 @@ class WebConfig : WebMvcConfigurer {
         super.configureContentNegotiation(configurer)
 
         configurer
-            .favorParameter(true)
-            .parameterName("mediaType")
-            .ignoreAcceptHeader(true)
+            .favorParameter(false)
+            //.parameterName("mediaType")
+            //.ignoreAcceptHeader(true)
             .useRegisteredExtensionsOnly(false)
             .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaType("json", MediaType.APPLICATION_JSON)
