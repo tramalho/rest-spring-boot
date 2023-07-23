@@ -28,11 +28,13 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
 
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")

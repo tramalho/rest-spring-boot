@@ -1,5 +1,6 @@
 package com.tramalho.rest.spring.boot.person.controller
 
+import com.tramalho.rest.spring.boot.config.serialization.MediaTypeUtils
 import  com.tramalho.rest.spring.boot.person.service.PersonService
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
@@ -16,7 +17,7 @@ class PersonController(private val personService: PersonService) {
         return personService.findById(id.toLong())
     }
 
-    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
+    @GetMapping
     fun findBAll(): List<PersonVOV2> {
         return personService.findAll()
     }
@@ -37,7 +38,7 @@ class PersonController(private val personService: PersonService) {
     }
 
     @DeleteMapping("/{$ID}")
-    fun delete(@PathVariable(ID) id: String):ResponseEntity<Any> {
+    fun delete(@PathVariable(ID) id: String): ResponseEntity<Any> {
         personService.delete(id.toLong())
         return ResponseEntity.noContent().build()
     }
