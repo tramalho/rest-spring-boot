@@ -3,6 +3,7 @@ package com.tramalho.rest.spring.boot.person.controller
 import  com.tramalho.rest.spring.boot.person.service.PersonService
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +16,7 @@ class PersonController(private val personService: PersonService) {
         return personService.findById(id.toLong())
     }
 
-    @GetMapping
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun findBAll(): List<PersonVOV2> {
         return personService.findAll()
     }
