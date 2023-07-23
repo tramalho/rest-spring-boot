@@ -1,7 +1,8 @@
 package com.tramalho.rest.spring.boot.person.mapper
 
 import com.tramalho.rest.spring.boot.person.model.PersonModel
-import com.tramalho.rest.spring.boot.person.vo.v1.PersonVO
+import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
+import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
 import org.junit.jupiter.api.BeforeEach
 
 import org.junit.jupiter.api.Assertions.*
@@ -30,14 +31,15 @@ class PersonMapperImpTest {
         assert(voList.first(), model)
     }
 
-    private fun assert(vo: PersonVO, model: PersonModel) {
+    private fun assert(vo: PersonVOV2, model: PersonModel) {
         assertEquals(vo.id, model.id)
         assertEquals(vo.firstName, model.firstName)
         assertEquals(vo.lastName, model.lastName)
         assertEquals(vo.address, model.address)
         assertEquals(vo.gender, model.gender)
+        assertEquals(vo.birthDay, model.birthDay)
     }
 
-    private fun createVO() = PersonVO(1, "firstName", "lastName", "address", "F")
+    private fun createVO() = PersonVOV2(1, "firstName", "lastName", "address", "F")
     private fun createModel() = PersonModel(1, "firstName", "lastName", "address", "F")
 }

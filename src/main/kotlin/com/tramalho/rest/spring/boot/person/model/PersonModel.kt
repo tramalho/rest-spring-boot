@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.time.LocalDate
 
 @Entity
 @Table(name = "person")
@@ -17,5 +18,7 @@ data class PersonModel(
     @Column(name = "last_name")
     var lastName: String = "",
     var address: String = "",
-    var gender: String = ""
+    var gender: String = "",
+    @Column(name = "birth_day")
+    var birthDay: LocalDate? = null,
 )
