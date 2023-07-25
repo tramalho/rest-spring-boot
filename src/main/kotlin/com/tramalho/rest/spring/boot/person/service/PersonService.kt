@@ -7,7 +7,6 @@ import com.tramalho.rest.spring.boot.person.model.PersonModel
 import com.tramalho.rest.spring.boot.person.repository.PersonRepository
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.hateoas.server.mvc.linkTo
 
@@ -19,16 +18,13 @@ class PersonService(
     private val personMapperImp: PersonMapperImp) {
 
     fun findById(id: Long): PersonVOV2 {
-
-        return findAndHighOrderFunction(id).apply {
-            val findById = { methodOn(PersonController::class.java).findById(id.toString()) }
-            val withSelfRel = linkTo<PersonController> { findById() }.withSelfRel()
-            this.add(withSelfRel)
-        }
+        return findAndHighOrderFunction(id)
     }
 
     fun findAll(): List<PersonVOV2> {
-        return personMapperImp.toListVO(personRepository.findAll())
+        val toListVO = personMapperImp.toListVO(personRepository.findAll())
+        toListVO.forEach { vo -> vo.hateoas() }
+        return toListVO
     }
 
     fun create(personVO: PersonVOV1): PersonVOV1 {
@@ -40,7 +36,9 @@ class PersonService(
     fun createV2(personVO: PersonVOV2): PersonVOV2 {
         val personModel = personMapperImp.toModel(personVO)
         val save = personRepository.save(personModel)
-        return personMapperImp.toVOV2(save)
+        return personMapperImp.toVOV2(save).apply {
+            hateoas()
+        }
     }
 
     fun update(personVO: PersonVOV2): PersonVOV2 {
@@ -72,6 +70,14 @@ class PersonService(
         }
         function.invoke(personModel)
 
-        return personMapperImp.toVOV2(personModel)
+        return personMapperImp.toVOV2(personModel).apply {
+            hateoas()
+        }
+    }
+
+    private fun PersonVOV2.hateoas() {
+        val findById = { methodOn(PersonController::class.java).findById(this.key.toString()) }
+        val withSelfRel = linkTo<PersonController> { findById() }.withSelfRel()
+        this.add(withSelfRel)
     }
 }
