@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.time.LocalDate
+import java.util.*
 
 @Entity
 @Table(name = "person")
@@ -19,6 +20,6 @@ data class PersonModel(
     var lastName: String = "",
     var address: String = "",
     var gender: String = "",
-    @Column(name = "birth_day")
+    @Column(name = "birth_day", nullable = true)
     var birthDay: LocalDate? = null,
 )

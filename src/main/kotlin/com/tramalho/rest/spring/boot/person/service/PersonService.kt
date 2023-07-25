@@ -1,11 +1,16 @@
 package com.tramalho.rest.spring.boot.person.service
 
 import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
+import com.tramalho.rest.spring.boot.person.controller.PersonController
 import com.tramalho.rest.spring.boot.person.mapper.PersonMapperImp
 import com.tramalho.rest.spring.boot.person.model.PersonModel
 import com.tramalho.rest.spring.boot.person.repository.PersonRepository
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
+import org.springframework.hateoas.server.mvc.linkTo
+
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,7 +19,12 @@ class PersonService(
     private val personMapperImp: PersonMapperImp) {
 
     fun findById(id: Long): PersonVOV2 {
-        return findAndHighOrderFunction(id)
+
+        return findAndHighOrderFunction(id).apply {
+            val findById = { methodOn(PersonController::class.java).findById(id.toString()) }
+            val withSelfRel = linkTo<PersonController> { findById() }.withSelfRel()
+            this.add(withSelfRel)
+        }
     }
 
     fun findAll(): List<PersonVOV2> {

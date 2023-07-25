@@ -1,1 +1,1 @@
-ALTER TABLE `person` add `birth_day` date;
+ALTER TABLE `person` add `birth_day` date NULL;

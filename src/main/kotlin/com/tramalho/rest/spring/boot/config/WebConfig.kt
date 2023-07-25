@@ -1,12 +1,22 @@
 package com.tramalho.rest.spring.boot.config
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.tramalho.rest.spring.boot.config.serialization.MediaTypeUtils
 import com.tramalho.rest.spring.boot.config.serialization.YamlJackson2HttpMessageConverter
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import java.time.format.DateTimeFormatter
+
 
 @Configuration
 class WebConfig : WebMvcConfigurer {
@@ -25,7 +35,7 @@ class WebConfig : WebMvcConfigurer {
     }
 
     override fun extendMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
-        converters.add(YamlJackson2HttpMessageConverter())
+        //converters.add(YamlJackson2HttpMessageConverter())
         super.extendMessageConverters(converters)
     }
 }
