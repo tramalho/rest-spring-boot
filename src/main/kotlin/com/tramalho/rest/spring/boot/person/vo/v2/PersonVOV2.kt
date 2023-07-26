@@ -19,14 +19,14 @@ import java.util.Date
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 open class PersonVOV2(
-        @JsonProperty("id")
-        var key: Long? = null,
-        var firstName: String = "",
-        var lastName: String = "",
-        var address: String = "",
-        var gender: String = "",
-        @JsonFormat(pattern = "yyyy-MM-dd")
-        @JsonSerialize(using = LocalDateSerializer::class)
-        var birthDay: LocalDate? = null
+    @JsonProperty("id")
+    var key: Long? = null,
+    var firstName: String = "",
+    var lastName: String = "",
+    var address: String = "",
+    var gender: String = "",
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer::class)
+    var birthDay: LocalDate? = null
 ) : RepresentationModel<PersonVOV2>()
 
