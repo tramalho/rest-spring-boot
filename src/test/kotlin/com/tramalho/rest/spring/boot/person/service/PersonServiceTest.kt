@@ -34,7 +34,6 @@ class PersonServiceTest {
 
     private lateinit var personService: PersonService
 
-
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
@@ -48,7 +47,7 @@ class PersonServiceTest {
         val personModel = PersonModel(1L)
         whenever(repository.findById(anyLong())).thenReturn(Optional.of(personModel))
 
-        val personVOV2 = personService.findById(1L)
+        val personVOV2 = personService.findById(anyLong())
 
         assertNotNull(personVOV2)
         assertNotNull(personVOV2.links)
