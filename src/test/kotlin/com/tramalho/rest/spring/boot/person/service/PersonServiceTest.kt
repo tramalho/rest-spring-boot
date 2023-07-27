@@ -1,9 +1,8 @@
 package com.tramalho.rest.spring.boot.person.service
 
-import com.tramalho.rest.spring.boot.person.mapper.PersonMapper
 import com.tramalho.rest.spring.boot.person.mapper.PersonMapperImp
 import com.tramalho.rest.spring.boot.person.model.PersonModel
-import com.tramalho.rest.spring.boot.person.repository.PersonRepository
+import com.tramalho.rest.spring.boot.person.repository.BookRepository
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
 import org.junit.jupiter.api.BeforeEach
 
@@ -13,10 +12,8 @@ import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
@@ -27,7 +24,7 @@ import java.util.*
 class PersonServiceTest {
 
     @Mock
-    private lateinit var repository: PersonRepository
+    private lateinit var repository: BookRepository
 
     @Mock
     private lateinit var personMapper: PersonMapperImp
