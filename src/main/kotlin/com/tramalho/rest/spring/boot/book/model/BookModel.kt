@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
-@Table(name = "book")
+@Table(name = "books")
 data class BookModel(
     @Id
     @GeneratedValue
