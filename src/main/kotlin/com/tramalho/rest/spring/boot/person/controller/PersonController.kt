@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/person")
 class PersonController(private val personService: PersonService) : PersonControllerDocs {
 
-    @CrossOrigin(origins = [ "localhost:8080","http://127.0.0.1" ])
+    //@CrossOrigin(origins = [ "localhost:8080","http://127.0.0.1" ])
     @GetMapping("/v1/{$ID}")
     override fun findById(@PathVariable(ID) id: String): PersonVOV2 {
         return personService.findById(id.toLong())
