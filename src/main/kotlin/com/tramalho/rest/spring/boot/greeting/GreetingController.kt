@@ -1,6 +1,6 @@
 package com.tramalho.rest.spring.boot.greeting
 
-import com.tramalho.rest.spring.boot.math.model.Greeting
+import com.tramalho.rest.spring.boot.greeting.model.Greeting
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
