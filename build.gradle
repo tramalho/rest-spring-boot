@@ -49,14 +49,10 @@ dependencies {
 	implementation 'org.flywaydb:flyway-mysql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
 	testImplementation "org.mockito.kotlin:mockito-kotlin:5+"
-
-	testImplementation "io.rest-assured:rest-assured"
-	testImplementation "io.rest-assured:kotlin-extensions"
-
-	testImplementation "org.testcontainers:mysql"
 }
 
 tasks.named('test') {

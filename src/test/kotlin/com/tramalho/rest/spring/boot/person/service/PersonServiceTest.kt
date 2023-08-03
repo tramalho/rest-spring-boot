@@ -2,7 +2,7 @@ package com.tramalho.rest.spring.boot.person.service
 
 import com.tramalho.rest.spring.boot.person.mapper.PersonMapperImp
 import com.tramalho.rest.spring.boot.person.model.PersonModel
-import com.tramalho.rest.spring.boot.person.repository.BookRepository
+import com.tramalho.rest.spring.boot.person.repository.PersonRepository
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
 import org.junit.jupiter.api.BeforeEach
 
@@ -24,7 +24,7 @@ import java.util.*
 class PersonServiceTest {
 
     @Mock
-    private lateinit var repository: BookRepository
+    private lateinit var repository: PersonRepository
 
     @Mock
     private lateinit var personMapper: PersonMapperImp
