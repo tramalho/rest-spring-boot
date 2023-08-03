@@ -1,4 +1,4 @@
-package com.tramalho.rest.spring.boot.exception
+package com.tramalho.rest.spring.boot.config.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus

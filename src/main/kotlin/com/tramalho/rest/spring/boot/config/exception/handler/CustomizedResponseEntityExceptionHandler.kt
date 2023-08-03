@@ -1,7 +1,7 @@
-package com.tramalho.rest.spring.boot.exception.handler
+package com.tramalho.rest.spring.boot.config.exception.handler
 
-import com.tramalho.rest.spring.boot.exception.ExceptionResponse
-import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
+import com.tramalho.rest.spring.boot.config.exception.ExceptionResponse
+import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity

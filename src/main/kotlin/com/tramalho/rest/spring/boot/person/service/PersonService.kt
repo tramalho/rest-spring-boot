@@ -1,6 +1,6 @@
 package com.tramalho.rest.spring.boot.person.service
 
-import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
+import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
 import com.tramalho.rest.spring.boot.person.controller.PersonController
 import com.tramalho.rest.spring.boot.person.mapper.PersonMapperImp
 import com.tramalho.rest.spring.boot.person.model.PersonModel

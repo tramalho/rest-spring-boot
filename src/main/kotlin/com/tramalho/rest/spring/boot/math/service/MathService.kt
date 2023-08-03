@@ -1,7 +1,7 @@
-package com.tramalho.rest.spring.boot.service
+package com.tramalho.rest.spring.boot.math.service
 
-import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
-import com.tramalho.rest.spring.boot.model.Operation
+import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
+import com.tramalho.rest.spring.boot.math.model.Operation
 import org.springframework.stereotype.Component
 import kotlin.math.sqrt
 

@@ -1,4 +1,4 @@
-package com.tramalho.rest.spring.boot.controller
+package com.tramalho.rest.spring.boot.greeting
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

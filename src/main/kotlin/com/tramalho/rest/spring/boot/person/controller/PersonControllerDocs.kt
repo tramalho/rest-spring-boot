@@ -1,6 +1,6 @@
 package com.tramalho.rest.spring.boot.person.controller
 
-import com.tramalho.rest.spring.boot.exception.ExceptionResponse
+import com.tramalho.rest.spring.boot.config.exception.ExceptionResponse
 import com.tramalho.rest.spring.boot.person.controller.PersonControllerDocs.Companion.TAG
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2

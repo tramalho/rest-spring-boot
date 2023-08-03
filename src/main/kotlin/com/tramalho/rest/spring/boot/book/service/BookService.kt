@@ -6,7 +6,7 @@ import com.tramalho.rest.spring.boot.book.model.BookModel
 import com.tramalho.rest.spring.boot.book.repository.BookRepository
 import com.tramalho.rest.spring.boot.book.vo.BookVO
 import org.springframework.stereotype.Service
-import com.tramalho.rest.spring.boot.exception.ResourceNotFoundException
+import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
 import com.tramalho.rest.spring.boot.person.controller.PersonController
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
 import org.springframework.hateoas.server.mvc.linkTo

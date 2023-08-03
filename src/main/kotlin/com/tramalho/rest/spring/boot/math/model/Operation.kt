@@ -1,4 +1,4 @@
-package com.tramalho.rest.spring.boot.model
+package com.tramalho.rest.spring.boot.math.model
 
 enum class Operation {
     SUM,

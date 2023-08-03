@@ -1,7 +1,7 @@
-package com.tramalho.rest.spring.boot.controller
+package com.tramalho.rest.spring.boot.math
 
-import com.tramalho.rest.spring.boot.model.Operation
-import com.tramalho.rest.spring.boot.service.MathService
+import com.tramalho.rest.spring.boot.math.model.Operation
+import com.tramalho.rest.spring.boot.math.service.MathService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController

@@ -1,4 +1,4 @@
-package com.tramalho.rest.spring.boot.exception
+package com.tramalho.rest.spring.boot.config.exception
 
 import java.io.Serializable
 import java.util.Date
