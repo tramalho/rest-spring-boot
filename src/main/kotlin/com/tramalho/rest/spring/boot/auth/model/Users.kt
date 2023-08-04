@@ -6,7 +6,8 @@ import jakarta.persistence.*
 @Table
 data class Users(
     @Id @GeneratedValue val id: Long? = null,
-    @Column(name = "user_name", unique = true) val username: String,
+    @Column(name = "user_name", unique = true)
+    val userName: String,
     @Column(name = "full_name") val fullName: String,
     val password: String,
     @Column(name = "account_non_expired") val accountNonExpired: Boolean?,

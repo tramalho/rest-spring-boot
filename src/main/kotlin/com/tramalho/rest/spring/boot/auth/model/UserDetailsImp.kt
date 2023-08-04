@@ -17,7 +17,7 @@ data class UserDetailsImp(val users: Users) : UserDetails {
     }
 
     override fun getUsername(): String {
-        return users.username
+        return users.userName
     }
 
     override fun isAccountNonExpired(): Boolean {
