@@ -70,10 +70,14 @@ class JwtTokenService(
         return token?.replace("Bearer", "")?.trim() ?: ""
     }
 
-    fun getAuth(token: String): Authentication {
-        val decodeToken = decodeToken(token)
-        val userDetails = userDetailsService.loadUserByUsername(decodeToken.subject)
-        return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
+    fun getAuth(token: String): Authentication? {
+        return try {
+            val decodeToken = decodeToken(token)
+            val userDetails = userDetailsService.loadUserByUsername(decodeToken.subject)
+            UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
+        } catch (ex: Exception) {
+            null
+        }
     }
 
     private fun decodeToken(token: String): DecodedJWT {
