@@ -1,6 +1,7 @@
 package com.tramalho.rest.spring.boot.config.exception.handler
 
 import com.tramalho.rest.spring.boot.config.exception.ExceptionResponse
+import com.tramalho.rest.spring.boot.config.exception.InvalidJwtAuthException
 import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -31,6 +32,14 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
         webRequest: WebRequest
     ): ResponseEntity<ExceptionResponse> {
         return configResponse(exception, webRequest, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(InvalidJwtAuthException::class)
+    final fun handleInvalidJwtAuthException(
+        exception: Exception,
+        webRequest: WebRequest
+    ): ResponseEntity<ExceptionResponse> {
+        return configResponse(exception, webRequest, HttpStatus.FORBIDDEN)
     }
 
     private fun configResponse(
