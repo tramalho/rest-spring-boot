@@ -11,7 +11,8 @@ import java.util.Optional
 
 @Service
 class UserService(private val usersRepository: UsersRepository) : UserDetailsService {
-    override fun loadUserByUsername(username: String): UserDetails {
+
+    override fun loadUserByUsername(username: String): UserDetailsImp {
 
         val nullable = Optional.ofNullable(usersRepository.findByName(username))
 
