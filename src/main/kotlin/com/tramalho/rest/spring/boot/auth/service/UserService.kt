@@ -6,13 +6,16 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
+import java.util.Optional
 
 
 @Service
 class UserService(private val usersRepository: UsersRepository) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
 
-        val users = usersRepository.findByName(username).orElseThrow {
+        val nullable = Optional.ofNullable(usersRepository.findByName(username))
+
+        val users = nullable.orElseThrow {
             throw UsernameNotFoundException("No record with username $username")
         }
 
