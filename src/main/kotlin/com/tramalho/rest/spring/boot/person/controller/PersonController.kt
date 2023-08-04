@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person")
 class PersonController(private val personService: PersonService) : PersonControllerDocs {
 
     //@CrossOrigin(origins = [ "localhost:8080","http://127.0.0.1" ])

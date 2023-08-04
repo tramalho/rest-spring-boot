@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api//book")
 class BookController(private val bookService: BookService) {
 
     @GetMapping("/v1/{${ID}}", produces = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
