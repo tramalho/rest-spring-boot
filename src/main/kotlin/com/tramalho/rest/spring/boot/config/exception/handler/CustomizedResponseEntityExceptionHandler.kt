@@ -1,5 +1,6 @@
 package com.tramalho.rest.spring.boot.config.exception.handler
 
+import com.auth0.jwt.exceptions.JWTDecodeException
 import com.tramalho.rest.spring.boot.config.exception.ExceptionResponse
 import com.tramalho.rest.spring.boot.config.exception.InvalidJwtAuthException
 import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
@@ -36,7 +37,7 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
         return configResponse(exception, webRequest, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(InvalidJwtAuthException::class, BadCredentialsException::class, UsernameNotFoundException::class)
+    @ExceptionHandler(value = [UsernameNotFoundException::class, InvalidJwtAuthException::class, BadCredentialsException::class])
     final fun handleInvalidJwtAuthException(
         exception: Exception,
         webRequest: WebRequest
