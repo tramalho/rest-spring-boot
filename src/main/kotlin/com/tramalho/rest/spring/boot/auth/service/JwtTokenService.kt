@@ -8,6 +8,7 @@ import com.tramalho.rest.spring.boot.config.exception.InvalidJwtAuthException
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -64,7 +65,6 @@ class JwtTokenService(
 
         return isOk
     }
-
     fun resolveToken(httpServletRequest: HttpServletRequest): String {
         val token = httpServletRequest.getHeader("Authorization")
         return token?.replace("Bearer", "")?.trim() ?: ""

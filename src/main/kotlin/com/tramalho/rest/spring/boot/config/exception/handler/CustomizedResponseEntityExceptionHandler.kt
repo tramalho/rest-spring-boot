@@ -8,18 +8,19 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.lang.Exception
 import java.util.Date
 
-@RestController
 @ControllerAdvice
-class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
+class CustomizedResponseEntityExceptionHandler: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(Exception::class)
     final fun handleAllExceptions(
@@ -31,13 +32,13 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
 
     @ExceptionHandler(ResourceNotFoundException::class)
     final fun handleResourceNotFoundException(
-        exception: Exception,
+        exception: ResourceNotFoundException,
         webRequest: WebRequest
     ): ResponseEntity<ExceptionResponse> {
         return configResponse(exception, webRequest, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(value = [UsernameNotFoundException::class, InvalidJwtAuthException::class, BadCredentialsException::class])
+    @ExceptionHandler(value = [UsernameNotFoundException::class, BadCredentialsException::class, InvalidJwtAuthException::class])
     final fun handleInvalidJwtAuthException(
         exception: Exception,
         webRequest: WebRequest

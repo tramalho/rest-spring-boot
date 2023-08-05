@@ -19,6 +19,8 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
+  mvc:
+    exception-if-no-handler-found: true
   jpa:
     hibernate:
       ddl-auto: update
