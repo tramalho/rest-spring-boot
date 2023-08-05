@@ -6,6 +6,8 @@ import com.tramalho.rest.spring.boot.config.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestController
@@ -34,7 +36,7 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
         return configResponse(exception, webRequest, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(InvalidJwtAuthException::class)
+    @ExceptionHandler(InvalidJwtAuthException::class, BadCredentialsException::class, UsernameNotFoundException::class)
     final fun handleInvalidJwtAuthException(
         exception: Exception,
         webRequest: WebRequest

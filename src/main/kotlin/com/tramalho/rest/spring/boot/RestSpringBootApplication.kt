@@ -1,5 +1,6 @@
 package com.tramalho.rest.spring.boot
 
+import com.tramalho.rest.spring.boot.auth.config.CustomPasswordEncoder
 import com.tramalho.rest.spring.boot.auth.config.SecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -9,18 +10,17 @@ import org.springframework.boot.runApplication
 class RestSpringBootApplication
 
 /*
-	@Autowired
-	private var securityConfig: SecurityConfig = SecurityConfig(null)
+	private val customPasswordEncoder: CustomPasswordEncoder = CustomPasswordEncoder()
 */
 
 fun main(args: Array<String>) {
 	runApplication<RestSpringBootApplication>(*args)
 
-/*	val passwordEncoder = securityConfig.passwordEncoder()
+/*	val passwordEncoder = customPasswordEncoder.passwordEncoder
 
 	val result1 = passwordEncoder.encode("admin123")
 	val result2 = passwordEncoder.encode("admin345")
 
-	println(result1)
-	println(result2)*/
+	println("result1:$result1")
+	println("result2:$result2")*/
 }

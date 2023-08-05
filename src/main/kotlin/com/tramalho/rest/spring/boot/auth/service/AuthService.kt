@@ -1,10 +1,11 @@
 package com.tramalho.rest.spring.boot.auth.service
 
 import com.tramalho.rest.spring.boot.auth.vo.AccountCredentialVO
-import org.springframework.http.ResponseEntity
+import com.tramalho.rest.spring.boot.auth.vo.TokenVO
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,21 +15,28 @@ class AuthService(
     private val userService: UserService
 ) {
 
-    fun signin(accountCredentialVO: AccountCredentialVO): ResponseEntity<Any> {
+    fun signin(accountCredentialVO: AccountCredentialVO): TokenVO {
 
-        try {
-            val (username, password) = accountCredentialVO
+        if (isValid(accountCredentialVO)) {
 
-            authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
+            try {
 
-            val userDetails = userService.loadUserByUsername(username)
+                val (username, password) = accountCredentialVO
 
-            val tokenVO = jwtTokenService.createAccessToken(userDetails.username, userDetails.getRoles())
+                authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
 
-            return ResponseEntity.ok(tokenVO)
-
-        } catch (ex: Exception) {
-            throw BadCredentialsException("Invalid credentials")
+                username?.let {
+                    val userDetails = userService.loadUserByUsername(it)
+                    return jwtTokenService.createAccessToken(userDetails.username, userDetails.getRoles())
+                }
+            } catch (ex: Exception) {
+                throw BadCredentialsException("Invalid credentials", ex)
+            }
         }
+        throw UsernameNotFoundException("Invalid Client Request")
+    }
+
+    private fun isValid(ac: AccountCredentialVO?): Boolean {
+        return ac != null && ac.password?.isNotEmpty() == true && ac.username?.isNotEmpty() == true
     }
 }

@@ -3,7 +3,6 @@ package com.tramalho.rest.spring.boot.auth.service
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.tramalho.rest.spring.boot.auth.model.Permission
 import com.tramalho.rest.spring.boot.auth.vo.TokenVO
 import com.tramalho.rest.spring.boot.config.exception.InvalidJwtAuthException
 import jakarta.annotation.PostConstruct
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.Exception
 import java.util.*
-import javax.print.attribute.standard.JobOriginatingUserName
 
 @Service
 class JwtTokenService(
@@ -52,14 +50,16 @@ class JwtTokenService(
     }
 
     fun validateToken(token: String): Boolean {
-        val isOk: Boolean
+        var isOk = false
         try {
 
-            val decodeToken = decodeToken(token)
-            isOk = decodeToken.expiresAt.after(Date())
+            if (token.isNotEmpty()) {
+                val decodeToken = decodeToken(token)
+                isOk = decodeToken.expiresAt.after(Date())
+            }
 
         } catch (ex: Exception) {
-            throw InvalidJwtAuthException("Invalid token")
+            throw InvalidJwtAuthException("Invalid token", ex)
         }
 
         return isOk

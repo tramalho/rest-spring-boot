@@ -12,7 +12,7 @@ data class Permission(
     @Id
     @GeneratedValue
     val id: Long? = null,
-    private val description: String
+    private val description: String = ""
 ) : GrantedAuthority {
     override fun getAuthority() = description
 }
