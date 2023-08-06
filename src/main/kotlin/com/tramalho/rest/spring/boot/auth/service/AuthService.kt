@@ -2,6 +2,7 @@ package com.tramalho.rest.spring.boot.auth.service
 
 import com.tramalho.rest.spring.boot.auth.vo.AccountCredentialVO
 import com.tramalho.rest.spring.boot.auth.vo.TokenVO
+import com.tramalho.rest.spring.boot.config.exception.InvalidJwtAuthException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -15,7 +16,7 @@ class AuthService(
     private val userService: UserService
 ) {
 
-    fun signin(accountCredentialVO: AccountCredentialVO): TokenVO {
+    fun signIn(accountCredentialVO: AccountCredentialVO): TokenVO {
 
         if (isValid(accountCredentialVO)) {
 
@@ -34,6 +35,16 @@ class AuthService(
             }
         }
         throw UsernameNotFoundException("Invalid Client Request")
+    }
+
+    fun refreshToken(refreshToken: String, userName: String): TokenVO {
+
+        if (userName.isNotEmpty() && refreshToken.isNotEmpty()) {
+            val userDetails = userService.loadUserByUsername(userName)
+            return jwtTokenService.createAccessToken(userDetails.username, userDetails.getRoles())
+        }
+
+        throw InvalidJwtAuthException("Invalid Client Request")
     }
 
     private fun isValid(ac: AccountCredentialVO?): Boolean {

@@ -37,6 +37,12 @@ class JwtTokenService(
         algorithm = Algorithm.HMAC256(secretKey.toByteArray())
     }
 
+    fun refreshToken(refreshToken: String): TokenVO {
+        val sanitizedToken = sanitizeToken(refreshToken)
+        val decodeToken = decodeToken(sanitizedToken)
+        return createAccessToken(decodeToken.subject, decodeToken.getClaim("roles").asList(String::class.java))
+    }
+
     fun createAccessToken(userName: String, roles: List<String>): TokenVO {
         val now = Date()
 
@@ -65,10 +71,8 @@ class JwtTokenService(
 
         return isOk
     }
-    fun resolveToken(httpServletRequest: HttpServletRequest): String {
-        val token = httpServletRequest.getHeader("Authorization")
-        return token?.replace("Bearer", "")?.trim() ?: ""
-    }
+
+    fun sanitizeToken(token: String?) = token?.replace("Bearer", "")?.trim() ?: ""
 
     fun getAuth(token: String): Authentication? {
         return try {
