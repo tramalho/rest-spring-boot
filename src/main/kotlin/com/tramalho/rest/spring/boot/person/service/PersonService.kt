@@ -11,6 +11,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.hateoas.server.mvc.linkTo
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PersonService(
@@ -62,6 +63,12 @@ class PersonService(
         findAndHighOrderFunction(id) {
             it.id?.let { it1 -> personRepository.deleteById(it1) }
         }
+    }
+
+    @Transactional
+    fun patchStatus(id: Long, enabled: Boolean): PersonVOV2 {
+        personRepository.patchStatus(id, enabled)
+        return findAndHighOrderFunction(id)
     }
 
     private fun findAndHighOrderFunction(id: Long, function: (PersonModel) -> Unit = {}): PersonVOV2 {

@@ -34,7 +34,11 @@ class PersonControllerTest {
 
     @BeforeEach
     fun setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply<DefaultMockMvcBuilder>(springSecurity()).build()
+        mockMvc = MockMvcBuilders
+            .webAppContextSetup(context)
+            //mock spring security
+            .apply<DefaultMockMvcBuilder>(springSecurity())
+            .build()
     }
 
     @ParameterizedTest

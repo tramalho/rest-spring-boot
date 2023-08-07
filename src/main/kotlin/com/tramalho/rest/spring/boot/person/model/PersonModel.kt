@@ -22,4 +22,5 @@ data class PersonModel(
     var gender: String = "",
     @Column(name = "birth_day", nullable = true)
     var birthDay: LocalDate? = null,
+    var enabled: Boolean = true,
 )

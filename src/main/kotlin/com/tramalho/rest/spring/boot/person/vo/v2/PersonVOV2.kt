@@ -27,6 +27,7 @@ open class PersonVOV2(
     var gender: String = "",
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer::class)
-    var birthDay: LocalDate? = null
-) : RepresentationModel<PersonVOV2>()
+    var birthDay: LocalDate? = null,
+    var enabled: Boolean = true,
+    ) : RepresentationModel<PersonVOV2>()
 

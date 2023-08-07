@@ -72,6 +72,8 @@ interface PersonControllerDocs {
 
     fun delete(id: String): ResponseEntity<Any>
 
+    fun patchStatus(id: String, enabled: Boolean): PersonVOV2
+
     companion object {
         const val ID = "id"
         const val TAG = "People"

@@ -4,6 +4,7 @@ import com.tramalho.rest.spring.boot.person.controller.PersonControllerDocs.Comp
 import  com.tramalho.rest.spring.boot.person.service.PersonService
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
+import jdk.jfr.Enabled
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -41,5 +42,10 @@ class PersonController(private val personService: PersonService) : PersonControl
     override fun delete(@PathVariable(ID) id: String): ResponseEntity<Any> {
         personService.delete(id.toLong())
         return ResponseEntity.noContent().build()
+    }
+
+    @PatchMapping("/v1/{$ID}/{enabled}")
+    override fun patchStatus(@PathVariable(ID) id: String, @PathVariable("enabled") enabled: Boolean): PersonVOV2 {
+        return personService.patchStatus(id.toLong(), enabled)
     }
 }
