@@ -45,7 +45,7 @@ class PersonController(private val personService: PersonService) : PersonControl
     }
 
     @PatchMapping("/v1/{$ID}/{enabled}")
-    override fun patchStatus(@PathVariable(ID) id: String, @PathVariable("enabled") enabled: Boolean): PersonVOV2 {
-        return personService.patchStatus(id.toLong(), enabled)
+    override fun patchStatus(@PathVariable(ID) id: Long, @PathVariable("enabled") enabled: Boolean): PersonVOV2 {
+        return personService.patchStatus(id, enabled)
     }
 }
