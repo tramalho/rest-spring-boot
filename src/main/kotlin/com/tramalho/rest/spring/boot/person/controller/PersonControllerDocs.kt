@@ -73,7 +73,8 @@ interface PersonControllerDocs {
     )
     fun findBAll(
         @RequestParam(value = "page", defaultValue = "0") page: Int,
-        @RequestParam(value = "limit", defaultValue = "12") limit: Int,
+        @RequestParam(value = "size", defaultValue = "12") size: Int,
+        @RequestParam(value = "direction", defaultValue = "asc") direction: String
     ): ResponseEntity<Page<PersonVOV2>>
 
     fun create(personVO: PersonVOV1): PersonVOV1
