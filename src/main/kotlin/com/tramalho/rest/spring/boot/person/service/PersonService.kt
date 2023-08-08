@@ -9,30 +9,41 @@ import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort.Direction
+import org.springframework.data.web.PagedResourcesAssembler
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.Link
+import org.springframework.hateoas.PagedModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.hateoas.server.mvc.linkTo
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 class PersonService(
     private val personRepository: PersonRepository,
-    private val personMapperImp: PersonMapperImp) {
+    private val personMapperImp: PersonMapperImp,
+    private val pagedResourcesAssembler: PagedResourcesAssembler<PersonVOV2>) {
 
     fun findById(id: Long): PersonVOV2 {
         return findAndHighOrderFunction(id)
     }
 
-    fun findAll(pageRequest: PageRequest): Page<PersonVOV2> {
+    fun findAll(pageRequest: PageRequest): PagedModel<EntityModel<PersonVOV2>> {
 
         val page = personRepository.findAll(pageRequest)
 
-        return page.map {
+        val personVOPageList = page.map {
             val toVOV2 = personMapperImp.toVOV2(it)
             toVOV2.hateoas()
             toVOV2
         }
+
+        val pageLink = hateoasFindAll(pageRequest)
+
+        return pagedResourcesAssembler.toModel(personVOPageList, pageLink)
     }
 
     fun create(personVO: PersonVOV1): PersonVOV1 {
@@ -93,5 +104,15 @@ class PersonService(
         val findById = { methodOn(PersonController::class.java).findById(this.key.toString()) }
         val withSelfRel = linkTo<PersonController> { findById() }.withSelfRel()
         this.add(withSelfRel)
+    }
+
+    private fun hateoasFindAll(p: PageRequest): Link {
+        //val directions = p.sort.getOrderFor()
+        val findAll = { methodOn(PersonController::class.java).findBAll(p.pageNumber, p.pageSize, "asc") }
+        return linkTo<PersonController> { findAll() }.withSelfRel()
+    }
+
+    fun Direction.toStr(): String {
+        return this.name.lowercase()
     }
 }

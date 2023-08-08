@@ -7,6 +7,8 @@ import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort.*
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.PagedModel
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -25,7 +27,7 @@ class PersonController(private val personService: PersonService) : PersonControl
         @RequestParam(value = "page", defaultValue = "0") page: Int,
         @RequestParam(value = "size", defaultValue = "12") size: Int,
         @RequestParam(value = "direction", defaultValue = "asc") direction: String
-    ): ResponseEntity<Page<PersonVOV2>> {
+    ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>> {
 
         val sort = by(Direction.fromString(direction), "firstName", "id")
 

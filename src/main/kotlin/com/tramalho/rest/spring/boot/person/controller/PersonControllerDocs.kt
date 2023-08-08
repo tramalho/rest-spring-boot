@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.Page
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.PagedModel
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -75,7 +77,7 @@ interface PersonControllerDocs {
         @RequestParam(value = "page", defaultValue = "0") page: Int,
         @RequestParam(value = "size", defaultValue = "12") size: Int,
         @RequestParam(value = "direction", defaultValue = "asc") direction: String
-    ): ResponseEntity<Page<PersonVOV2>>
+    ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>>
 
     fun create(personVO: PersonVOV1): PersonVOV1
 
