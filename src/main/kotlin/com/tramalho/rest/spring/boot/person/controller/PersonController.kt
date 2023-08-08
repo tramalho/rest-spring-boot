@@ -4,7 +4,8 @@ import com.tramalho.rest.spring.boot.person.controller.PersonControllerDocs.Comp
 import  com.tramalho.rest.spring.boot.person.service.PersonService
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
-import jdk.jfr.Enabled
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -19,8 +20,14 @@ class PersonController(private val personService: PersonService) : PersonControl
     }
 
     @GetMapping("/v1")
-    override fun findBAll(): List<PersonVOV2> {
-        return personService.findAll()
+    override fun findBAll(
+        @RequestParam(value = "page", defaultValue = "0") page: Int,
+        @RequestParam(value = "limit", defaultValue = "12") limit: Int,
+    ): ResponseEntity<Page<PersonVOV2>> {
+
+        val pageRequest = PageRequest.of(page, limit)
+
+        return ResponseEntity.ok(personService.findAll(pageRequest))
     }
 
     @PostMapping("/v1")

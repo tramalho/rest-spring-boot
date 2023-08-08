@@ -7,6 +7,8 @@ import com.tramalho.rest.spring.boot.person.model.PersonModel
 import com.tramalho.rest.spring.boot.person.repository.PersonRepository
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.hateoas.server.mvc.linkTo
 
@@ -22,10 +24,15 @@ class PersonService(
         return findAndHighOrderFunction(id)
     }
 
-    fun findAll(): List<PersonVOV2> {
-        val toListVO = personMapperImp.toListVO(personRepository.findAll())
-        toListVO.forEach { vo -> vo.hateoas() }
-        return toListVO
+    fun findAll(pageRequest: PageRequest): Page<PersonVOV2> {
+
+        val page = personRepository.findAll(pageRequest)
+
+        return page.map {
+            val toVOV2 = personMapperImp.toVOV2(it)
+            toVOV2.hateoas()
+            toVOV2
+        }
     }
 
     fun create(personVO: PersonVOV1): PersonVOV1 {
