@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
+import org.springframework.data.web.PagedResourcesAssembler
 import java.util.*
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -29,6 +30,9 @@ class PersonServiceTest {
     @Mock
     private lateinit var personMapper: PersonMapperImp
 
+    @Mock
+    private lateinit var pagedResourcesAssembler: PagedResourcesAssembler<PersonVOV2>
+
     private lateinit var personService: PersonService
 
     @BeforeEach
@@ -36,7 +40,7 @@ class PersonServiceTest {
         MockitoAnnotations.openMocks(this)
         whenever(personMapper.toVOV2(any())).thenReturn(PersonVOV2())
 
-        personService = PersonService(repository, personMapper)
+        personService = PersonService(repository, personMapper, pagedResourcesAssembler)
     }
 
     @Test

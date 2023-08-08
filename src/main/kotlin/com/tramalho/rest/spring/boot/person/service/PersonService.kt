@@ -19,7 +19,6 @@ import org.springframework.hateoas.server.mvc.linkTo
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Service
 class PersonService(
@@ -32,8 +31,21 @@ class PersonService(
     }
 
     fun findAll(pageRequest: PageRequest): PagedModel<EntityModel<PersonVOV2>> {
+        return findByHighOrder(pageRequest) {
+            personRepository.findAll(it)
+        }
+    }
 
-        val page = personRepository.findAll(pageRequest)
+    fun findByName(name: String, pageRequest: PageRequest): PagedModel<EntityModel<PersonVOV2>> {
+
+        return findByHighOrder(pageRequest) {
+            personRepository.findByName(name, it)
+        }
+    }
+
+    private fun findByHighOrder(pageRequest: PageRequest, function: (PageRequest) -> Page<PersonModel>): PagedModel<EntityModel<PersonVOV2>> {
+
+        val page = function(pageRequest)
 
         val personVOPageList = page.map {
             val toVOV2 = personMapperImp.toVOV2(it)
@@ -107,8 +119,8 @@ class PersonService(
     }
 
     private fun hateoasFindAll(p: PageRequest): Link {
-        //val directions = p.sort.getOrderFor()
-        val findAll = { methodOn(PersonController::class.java).findBAll(p.pageNumber, p.pageSize, "asc") }
+        val directions = p.sort.iterator().next().direction.toStr()
+        val findAll = { methodOn(PersonController::class.java).findBAll(p.pageNumber, p.pageSize, directions) }
         return linkTo<PersonController> { findAll() }.withSelfRel()
     }
 

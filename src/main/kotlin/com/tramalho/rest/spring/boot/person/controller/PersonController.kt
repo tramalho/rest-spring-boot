@@ -4,7 +4,6 @@ import com.tramalho.rest.spring.boot.person.controller.PersonControllerDocs.Comp
 import  com.tramalho.rest.spring.boot.person.service.PersonService
 import com.tramalho.rest.spring.boot.person.vo.v1.PersonVOV1
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort.*
 import org.springframework.hateoas.EntityModel
@@ -28,12 +27,22 @@ class PersonController(private val personService: PersonService) : PersonControl
         @RequestParam(value = "size", defaultValue = "12") size: Int,
         @RequestParam(value = "direction", defaultValue = "asc") direction: String
     ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>> {
+        return findHighOrder(page, size, direction) {
+            personService.findAll(it)
+        }
+    }
 
-        val sort = by(Direction.fromString(direction), "firstName", "id")
+    @GetMapping("/v1/by_name/{name}")
+    override fun findByName(
+        @PathVariable(value = "name") name: String,
+        @RequestParam(value = "page", defaultValue = "0") page: Int,
+        @RequestParam(value = "size", defaultValue = "12") size: Int,
+        @RequestParam(value = "direction", defaultValue = "asc") direction: String
+    ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>> {
 
-        val pageRequest = PageRequest.of(page, size, sort)
-
-        return ResponseEntity.ok(personService.findAll(pageRequest))
+        return findHighOrder(page, size, direction) {
+            personService.findByName(name, it)
+        }
     }
 
     @PostMapping("/v1")
@@ -60,5 +69,18 @@ class PersonController(private val personService: PersonService) : PersonControl
     @PatchMapping("/v1/{$ID}/{enabled}")
     override fun patchStatus(@PathVariable(ID) id: Long, @PathVariable("enabled") enabled: Boolean): PersonVOV2 {
         return personService.patchStatus(id, enabled)
+    }
+
+    private fun findHighOrder(
+        page: Int,
+        size: Int,
+        direction: String,
+        function: (PageRequest) -> PagedModel<EntityModel<PersonVOV2>>
+    ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>> {
+        val sort = by(Direction.fromString(direction), "firstName", "id")
+
+        val pageRequest = PageRequest.of(page, size, sort)
+
+        return ResponseEntity.ok(function(pageRequest))
     }
 }

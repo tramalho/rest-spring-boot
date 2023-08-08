@@ -79,6 +79,13 @@ interface PersonControllerDocs {
         @RequestParam(value = "direction", defaultValue = "asc") direction: String
     ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>>
 
+    fun findByName(
+        @PathVariable(value = "name") name: String,
+        @RequestParam(value = "page", defaultValue = "0") page: Int,
+        @RequestParam(value = "size", defaultValue = "12") size: Int,
+        @RequestParam(value = "direction", defaultValue = "asc") direction: String
+    ): ResponseEntity<PagedModel<EntityModel<PersonVOV2>>>
+
     fun create(personVO: PersonVOV1): PersonVOV1
 
     fun createV2(personVOV2: PersonVOV2): PersonVOV2
