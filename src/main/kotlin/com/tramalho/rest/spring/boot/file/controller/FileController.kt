@@ -1,20 +1,35 @@
 package com.tramalho.rest.spring.boot.file.controller
 
-import com.tramalho.rest.spring.boot.file.model.FileModel
+import com.tramalho.rest.spring.boot.file.controller.FileController.Companion.BASE_PATH
 import com.tramalho.rest.spring.boot.file.service.FileService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import com.tramalho.rest.spring.boot.file.vo.FileResponseVO
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 @RestController
+@RequestMapping(BASE_PATH)
 class FileController(private val fileService: FileService) {
 
-    @GetMapping("/file/{ID}")
-    fun findById(@PathVariable(ID) id: String): FileModel {
-        return fileService.findById(id.toLong())
+    @PostMapping(UPLOAD_PATH)
+    fun uploadFile(@RequestParam("file") multipartFile: MultipartFile): FileResponseVO {
+
+        val storedFileName = fileService.storeFile(multipartFile)
+
+        val filedDownloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("$BASE_PATH$DOWNLOAD_PATH")
+                .path(storedFileName)
+                .toUriString()
+
+        return FileResponseVO(storedFileName, filedDownloadURI, multipartFile.contentType ?: "", multipartFile.size)
     }
 
-    private companion object {
-        private const val ID = "id"
+    companion object {
+        const val BASE_PATH = "/api/file"
+        const val UPLOAD_PATH = "/v1/upload"
+        const val DOWNLOAD_PATH = "/v1/download"
     }
 }
