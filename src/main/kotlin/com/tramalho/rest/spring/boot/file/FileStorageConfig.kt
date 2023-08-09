@@ -1,4 +1,4 @@
-package com.tramalho.rest.spring.boot.config
+package com.tramalho.rest.spring.boot.file
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
