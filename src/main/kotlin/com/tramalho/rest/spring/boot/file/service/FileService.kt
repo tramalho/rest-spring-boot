@@ -12,20 +12,7 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
 @Service
-class FileService(fileStorageConfig: FileStorageConfig) {
-
-    private val absolutPath: Path by lazy {
-        val path = Paths.get(fileStorageConfig.uploadDir)
-        path.toAbsolutePath().normalize()
-
-        try {
-            Files.createDirectory(path)
-        } catch (ex: Exception) {
-            throw FileStorageException("Could not create Directory ${path.toUri().path}", ex)
-        }
-
-        path
-    }
+class FileService(private val fileStorageConfig: FileStorageConfig) {
 
     fun storeFile(multipartFile: MultipartFile): String {
 
@@ -34,7 +21,7 @@ class FileService(fileStorageConfig: FileStorageConfig) {
         try {
             fileName = StringUtils.cleanPath(multipartFile.originalFilename ?: fileName)
 
-            val targetLocation = absolutPath.resolve(fileName)
+            val targetLocation = resolveDir().resolve(fileName)
 
             Files.copy(multipartFile.inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING)
 
@@ -45,5 +32,20 @@ class FileService(fileStorageConfig: FileStorageConfig) {
         }
 
         return fileName
+    }
+
+    private fun resolveDir(): Path {
+        val path = Paths.get(fileStorageConfig.uploadDir)
+        path.toAbsolutePath().normalize()
+
+        try {
+            if (!Files.exists(path)) {
+                Files.createDirectory(path)
+            }
+        } catch (ex: Exception) {
+            throw FileStorageException("Could not create Directory ${path.toUri().path}", ex)
+        }
+
+        return path
     }
 }

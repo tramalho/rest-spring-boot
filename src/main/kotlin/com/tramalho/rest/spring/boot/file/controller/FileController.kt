@@ -27,9 +27,19 @@ class FileController(private val fileService: FileService) {
         return FileResponseVO(storedFileName, filedDownloadURI, multipartFile.contentType ?: "", multipartFile.size)
     }
 
+    @PostMapping(UPLOAD_MULTIPLES_PATH)
+    fun uploadMultiples(@RequestParam("files") multipartFile: List<MultipartFile>): List<FileResponseVO> {
+
+        return multipartFile.map {
+            uploadFile(it)
+        }.toList()
+    }
+
+
     companion object {
         const val BASE_PATH = "/api/file"
         const val UPLOAD_PATH = "/v1/upload"
+        const val UPLOAD_MULTIPLES_PATH = "/v1/upload/multiples"
         const val DOWNLOAD_PATH = "/v1/download"
     }
 }
