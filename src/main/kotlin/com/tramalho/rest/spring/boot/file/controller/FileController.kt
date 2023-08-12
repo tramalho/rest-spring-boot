@@ -55,7 +55,6 @@ class FileController(private val fileService: FileService) {
                 .body(resource)
     }
 
-
     companion object {
         const val BASE_PATH = "/api/file"
         const val UPLOAD_PATH = "/v1/upload"
