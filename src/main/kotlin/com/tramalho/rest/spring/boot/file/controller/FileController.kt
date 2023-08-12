@@ -39,7 +39,7 @@ class FileController(private val fileService: FileService) {
     companion object {
         const val BASE_PATH = "/api/file"
         const val UPLOAD_PATH = "/v1/upload"
-        const val UPLOAD_MULTIPLES_PATH = "/v1/upload/multiples"
+        const val UPLOAD_MULTIPLES_PATH = "/v1/multi_upload"
         const val DOWNLOAD_PATH = "/v1/download"
     }
 }

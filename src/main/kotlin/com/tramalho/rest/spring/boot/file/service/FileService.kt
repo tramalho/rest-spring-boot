@@ -1,9 +1,11 @@
 package com.tramalho.rest.spring.boot.file.service
 
 import com.tramalho.rest.spring.boot.config.exception.FileStorageException
+import com.tramalho.rest.spring.boot.config.exception.MyFileNotFoundException
 import com.tramalho.rest.spring.boot.file.FileStorageConfig
 import org.springframework.stereotype.Service
-import com.tramalho.rest.spring.boot.file.model.FileModel
+import org.springframework.core.io.Resource
+import org.springframework.core.io.UrlResource
 import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
@@ -21,7 +23,7 @@ class FileService(private val fileStorageConfig: FileStorageConfig) {
         try {
             fileName = StringUtils.cleanPath(multipartFile.originalFilename ?: fileName)
 
-            val targetLocation = resolveDir().resolve(fileName)
+            val targetLocation = resolvePath(fileName)
 
             Files.copy(multipartFile.inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING)
 
@@ -34,7 +36,26 @@ class FileService(private val fileStorageConfig: FileStorageConfig) {
         return fileName
     }
 
-    private fun resolveDir(): Path {
+    fun loadFileFromResource(filename: String): Resource {
+
+        try {
+
+            val targetLocation = resolvePath(filename)
+
+            UrlResource(targetLocation.toUri()).run {
+                if (exists()) {
+                    return this
+                }
+            }
+
+        } catch (e: Exception) {
+            throw MyFileNotFoundException("File not found: $filename", e)
+        }
+
+        throw MyFileNotFoundException("File not found: $filename")
+    }
+
+    private fun resolvePath(fileName: String): Path {
         val path = Paths.get(fileStorageConfig.uploadDir)
         path.toAbsolutePath().normalize()
 
@@ -46,6 +67,6 @@ class FileService(private val fileStorageConfig: FileStorageConfig) {
             throw FileStorageException("Could not create Directory ${path.toUri().path}", ex)
         }
 
-        return path
+        return path.resolve(fileName).normalize()
     }
 }
