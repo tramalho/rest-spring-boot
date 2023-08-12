@@ -3,11 +3,18 @@ package com.tramalho.rest.spring.boot.file.service
 import com.tramalho.rest.spring.boot.config.exception.FileStorageException
 import com.tramalho.rest.spring.boot.config.exception.MyFileNotFoundException
 import com.tramalho.rest.spring.boot.file.FileStorageConfig
+import org.apache.commons.lang3.CharSet
+import org.apache.tomcat.util.buf.Utf8Encoder
 import org.springframework.stereotype.Service
 import org.springframework.core.io.Resource
 import org.springframework.core.io.UrlResource
 import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
+import java.net.URI
+import java.net.URL
+import java.net.URLDecoder
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -21,7 +28,8 @@ class FileService(private val fileStorageConfig: FileStorageConfig) {
         var fileName = ""
 
         try {
-            fileName = StringUtils.cleanPath(multipartFile.originalFilename ?: fileName)
+            fileName = URLDecoder.decode(StringUtils.cleanPath(multipartFile.originalFilename ?: fileName), StandardCharsets.UTF_8)
+            fileName = fileName.replace(Regex("[^\\w.]"), "_")
 
             val targetLocation = resolvePath(fileName)
 

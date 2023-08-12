@@ -3,6 +3,12 @@ package com.tramalho.rest.spring.boot.file.controller
 import com.tramalho.rest.spring.boot.file.controller.FileController.Companion.BASE_PATH
 import com.tramalho.rest.spring.boot.file.service.FileService
 import com.tramalho.rest.spring.boot.file.vo.FileResponseVO
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -33,6 +39,20 @@ class FileController(private val fileService: FileService) {
         return multipartFile.map {
             uploadFile(it)
         }.toList()
+    }
+
+    @GetMapping("$DOWNLOAD_PATH/{filename:.+}")
+    fun downloadFile(@PathVariable("filename") fileName: String, httpServletRequest: HttpServletRequest): ResponseEntity<Any> {
+
+        val resource = fileService.loadFileFromResource(fileName)
+
+        val contentType = httpServletRequest.servletContext.getMimeType(resource.file.absolutePath)
+
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename='${resource.filename}'")
+                .body(resource)
     }
 
 
