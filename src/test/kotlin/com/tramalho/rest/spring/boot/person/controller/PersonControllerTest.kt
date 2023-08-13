@@ -1,5 +1,6 @@
 package com.tramalho.rest.spring.boot.person.controller
 
+import com.tramalho.rest.spring.boot.RestSpringBootApplication
 import com.tramalho.rest.spring.boot.person.service.PersonService
 import com.tramalho.rest.spring.boot.person.vo.v2.PersonVOV2
 import org.junit.jupiter.api.BeforeEach
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = [RestSpringBootApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PersonControllerTest {
 
     @MockBean
