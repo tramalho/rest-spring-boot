@@ -12,20 +12,9 @@ security:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3308/rest-spring-boot?useTimezone=true&serverTimezone=UTC
-    username: root
-    password: admin123
-  logging:
-    level:
-      root: INFO, ERROR, DEBUG
-  jackson:
-    serialization:
-      write-dates-as-timestamps: true
-  mvc:
-    exception-if-no-handler-found: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
@@ -41,7 +30,6 @@ spring-doc:
   - /**/v1/**
   - /**/v2/**
   - /**/auth/**
-
   swagger-ui:
     use-root-path: true
 
