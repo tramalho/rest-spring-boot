@@ -12,7 +12,7 @@ security:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db:3308/rest-spring-boot?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://mysql:3308/rest-spring-boot?useTimezone=true&serverTimezone=UTC
     username: root
     password: admin123
   logging:
