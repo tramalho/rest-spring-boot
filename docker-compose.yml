@@ -34,7 +34,6 @@ services:
       SPRING.FLYWAY.PASSWORD: admin123
     ports:
       - "80:80"
-    command: ./gradlew bootRun
     depends_on:
       - db
     networks:
