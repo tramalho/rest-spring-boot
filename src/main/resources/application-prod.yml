@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 80
 cors:
   originPatterns: http://localhost:3000,http://127.0.0.1:8080
 file:
@@ -12,10 +12,20 @@ security:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rest-spring-boot?useTimezone=true&serverTimezone=UTC
+    url: ${SPRING.DATASOURCE.URL}
+    username: ${SPRING.DATASOURCE.USERNAME}
+    password: ${SPRING.DATASOURCE.PASSWORD}
+  logging:
+    level:
+      root: INFO, ERROR, DEBUG
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  mvc:
+    exception-if-no-handler-found: true
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
@@ -28,9 +38,10 @@ spring:
         max-request-size: 215MB
 spring-doc:
   pathsToMatch:
-  - /**/v1/**
-  - /**/v2/**
-  - /**/auth/**
+    - /**/v1/**
+    - /**/v2/**
+    - /**/auth/**
+
   swagger-ui:
     use-root-path: true
 

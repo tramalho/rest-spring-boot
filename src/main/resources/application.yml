@@ -1,47 +1,4 @@
-server:
-  port: 80
-cors:
-  originPatterns: http://localhost:3000,http://127.0.0.1:8080
-file:
-  upload-dir: ../uploadDir
-security:
-  jwt:
-    token:
-      secret-key: 53cr37
-      expire-length: 3600000
 spring:
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rest-spring-boot?useTimezone=true&serverTimezone=UTC
-    username: root
-    password: admin123
-  logging:
-    level:
-      root: INFO, ERROR, DEBUG
-  jackson:
-    serialization:
-      write-dates-as-timestamps: true
-  mvc:
-    exception-if-no-handler-found: true
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-      show-sql: false
-    servlet:
-      multipart:
-        enabled: true
-        file-size-threshold: 2KB
-        max-file-size: 200MB
-        max-request-size: 215MB
-spring-doc:
-  pathsToMatch:
-  - /**/v1/**
-  - /**/v2/**
-  - /**/auth/**
-
-  swagger-ui:
-    use-root-path: true
+  profiles:
+    active: dev
 
