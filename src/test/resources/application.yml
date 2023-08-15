@@ -12,6 +12,7 @@ security:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest-spring-boot?useTimezone=true&serverTimezone=UTC
   jpa:
     hibernate:
       ddl-auto: none
