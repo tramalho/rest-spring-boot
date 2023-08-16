@@ -35,7 +35,7 @@ jobs:
     - name: Build Application JAR with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
-        arguments: ./gradlew clean build -Dspring.profiles.active=prod --info
+        arguments: clean build -Dspring.profiles.active=prod --info
 
     - name: Docker Compose
       run: docker compose build
